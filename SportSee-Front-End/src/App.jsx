@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/* import { useState, useEffect } from 'react';
+import axios from 'axios'; */
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+
+import NavHorizontal from './components/NavHorizontal';
+import NavVertical from './components/NavVertical';
+import Home from './pages/Home';
+import Error from './pages/Error';
+import UserSelect from './components/User';
 
 function App() {
-  const [count, setCount] = useState(0)
+ /*  const [defaultUserData, setDefaultUserData] = useState(null);
 
+  useEffect(() => {
+    const fetchDefaultUserData = async (userId) => {
+      try {
+        const response = await axios.get(`http://localhost:3000/user/${userId}`);
+        setDefaultUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    // Utilisez l'ID par défaut spécifié dans votre question
+    fetchDefaultUserData('defaultUserId');
+  }, []);
+ */
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Router>
+        <NavHorizontal />
+        <NavVertical />
+        <UserSelect />
+        <Routes>
+          <Route path="/" element={<Outlet />}>
+            <Route
+              index
+              element={<Home userData="defaultUserData" />}
+            />
+          </Route>
+          <Route
+            path="/user/:id"
+            element={<Home />}
+          />
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

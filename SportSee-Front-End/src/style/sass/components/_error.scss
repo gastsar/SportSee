@@ -1,0 +1,28 @@
+.error {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  color: red;
+  height: 78vh;
+  
+  &__title {
+    font-size: 288px;
+    font-weight: 700;
+    letter-spacing: 0em;
+    text-align: center;
+
+  }
+  &__descript {
+    font-size: 36px;
+    font-weight: 500;
+color: #000;
+
+  }
+
+  a {
+    font-size: 18px;
+    font-weight: 500;
+   color: #000;
+    text-decoration: underline;
+  }
+}
