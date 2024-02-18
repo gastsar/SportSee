@@ -5,6 +5,7 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+
   ResponsiveContainer
 } from "recharts";
 
@@ -21,6 +22,11 @@ function CustomTooltipLinear({ active, payload }) {
   return null
 }
 
+// Fonction de formatage des jours
+const formatDayOfWeek = (dayNumber) => {
+  const daysOfWeek = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  return daysOfWeek[dayNumber - 1];
+};
 export default function ChartSessions({ data }) {
   return (
     <article className="linearChart-Wrapper idem">
@@ -41,6 +47,7 @@ export default function ChartSessions({ data }) {
               fontWeight: 500,
               fontSize: 12,
             }}
+            tickFormatter={formatDayOfWeek}
           />
 
           <YAxis
@@ -58,9 +65,9 @@ export default function ChartSessions({ data }) {
             stroke="#FFFFFF"
             dot={false}
             activeDot={{ r: 5 }}
-            strokeWidth={3}
+            strokeWidth={2}
           />
-
+        
         </LineChart>
       </ResponsiveContainer>
     </article>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CharActivity from '../../components/ChartActivity';
 import ChartPerf from '../../components/ChartPerf';
@@ -8,58 +9,63 @@ import iconeCalorie from '../../assets/calorie-icon.png';
 import iconeGlucide from '../../assets/glucide-icon.png';
 import iconeProteine from '../../assets/protein-icon.png';
 import iconeLipide from '../../assets/lipide-icon.png';
-import { useEffect} from 'react';
-import useUserData from '../../utils/hooks';
+
+import { useDataApi, useDataMock } from '../../utils/useDataFetching';
+import { Checkbox } from '../../components/CheckBock';
 
 export default function Home() {
   const { id } = useParams();
-  const { isLoading, error, data } = useUserData(id);
+  const [userData, setUserData] = useState({});
+  const [userActivity, setUserActivity] = useState({});
+  const [userPerformance, setUserPerformance] = useState({});
+  const [userSession, setUserSession] = useState({});
+  const [useApi, setUseApi] = useState(true); // État pour déterminer l'utilisation de l'API ou des fausses données
 
-  useEffect(() => {
-    // Vous pouvez exécuter d'autres actions à chaque changement de data, isLoading, error si nécessaire
-  }, [data, isLoading, error]);
+  // Choisissez le hook approprié en fonction de la valeur de useApi
+  const dataHook = useApi ? useDataMock : useDataApi;
 
-  if (isLoading) {
-    return <div className="section">Loading...</div>;
-  }
+  // Appelez le hook sélectionné
+  dataHook(id, setUserData, setUserActivity, setUserSession, setUserPerformance);
 
-  if (error) {
-    return <div className="section">{error}</div>;
-  }
+  const { userInfos, keyData } = userData;
+ 
 
- /*  console.log("User First Name:", data.userInfos);
-  console.log("User Performance:", data.userPerformance);
-  console.log("User Session:", data.userSession);
- */
+ 
   return (
     <>
       <main className="main-containte">
-        {data && 
-          <div>
-            <div className="header-page">
-              <h1>
-                Bonjour <span className="nameUser">{data.userInfos?.firstName}</span>
-              </h1>
-              <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
+        <div className="header-page">
+          <h1>
+            <span>Bonjour </span>
+            <span className="nameUser">{userInfos?.firstName}</span>
+            <Checkbox
+              label="Utiliser API"
+              checked={useApi}
+              onChange={() => {
+                setUseApi(!useApi);
+              
+              }}
+            />
+          </h1>
+          <p>Félicitation ! Vous avez explosé vos objectifs hier 👏 </p>
+        </div>
+        <div className="container-chart">
+          <section className="section-content">
+            <CharActivity data={userActivity?.sessions || []} />
+            <div className="chart">
+              <ChartSessions data={userSession?.sessions || []} />
+              <ChartPerf dataPerf={userPerformance || []} />
+    
+              <ChartScore data={userData} />
             </div>
-            <div className="container-chart">
-              <section className="section-content">
-                <CharActivity data={data.userActivity?.sessions} />
-                <div className="chart">
-                  <ChartSessions data={data.userSession?.sessions} />
-                  <ChartPerf data={data.userPerformance?.data} />
-                  <ChartScore data={data.userInfos?.score} />
-                </div>
-              </section>
-              <aside className="section-aside">
-                <KeyData srcIcone={iconeCalorie} quatityName="Calories" quantitycount={data.keyData?.calorieCount} />
-                <KeyData srcIcone={iconeProteine} quatityName="Proteines" quantitycount={data.keyData?.proteinCount} />
-                <KeyData srcIcone={iconeGlucide} quatityName="Glucides" quantitycount={data.keyData?.carbohydrateCount} />
-                <KeyData srcIcone={iconeLipide} quatityName="Lipides" quantitycount={data.keyData?.lipidCount} />
-              </aside>
-            </div>
-          </div>
-        }
+          </section>
+          <aside className="section-aside">
+            <KeyData srcIcone={iconeCalorie} quatityName="Calories" quantitycount={keyData?.calorieCount} />
+            <KeyData srcIcone={iconeProteine} quatityName="Proteines" quantitycount={keyData?.proteinCount} />
+            <KeyData srcIcone={iconeGlucide} quatityName="Glucides" quantitycount={keyData?.carbohydrateCount} />
+            <KeyData srcIcone={iconeLipide} quatityName="Lipides" quantitycount={keyData?.lipidCount} />
+          </aside>
+        </div>
       </main>
     </>
   );

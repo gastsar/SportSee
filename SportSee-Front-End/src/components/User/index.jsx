@@ -1,12 +1,8 @@
-import { useState } from 'react';
+
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import mockdata from '../../data/mockdata.json';
-import { Checkbox } from '../CheckBock';
-import { toggleApiUsage } from '../../utils/config';
-
 function UserComponent({ id, firstName, lastName }) {
-  const [isSelected, setIsSelected] = useState(false);
 
   let initialFirstName = firstName.charAt(0);
   let initialLastName = lastName.charAt(0);
@@ -14,13 +10,7 @@ function UserComponent({ id, firstName, lastName }) {
 
   return (
     <div className='userContainer'>
-      <Checkbox
-        checked={isSelected}
-        onChange={setIsSelected}
-        label=''
-      />
-      {isSelected && toggleApiUsage()}
-      <Link to={`/user/${id}`}>
+      <Link to={`/user/${id}/dashboard`}>
         <h2>{initialFirstName}.{initialLastName}</h2>
       </Link>
     </div>
