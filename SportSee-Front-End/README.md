@@ -1,8 +1,50 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Project 12 SportSee
 
-Currently, two official plugins are available:
+Développez un tableau de bord d'analytics avec React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+
+
+## Installation
+### BackEnd Link :
+ https://github.com/OpenClassrooms-Student-Center/P9-front-end-dashboard.git
+
+Install the dependencies command.
+```bash
+  yarn
+```
+### FrontEnd :
+
+Install the dependencies command.
+```bash
+  yarn
+```
+
+## Utilisation donné:
+### Donner simuler
+#### 1- useUserData :
+Utilisation de json server:
+Endpoints:
+- http://localhost:3001/user
+- http://localhost:3001/activity
+- http://localhost:3001/average-sessions
+- http://localhost:3001/performance
+
+#### 1- useLocalData :
+
+Utilisation du data/mockdata.json 
+
+
+## Choix utilisation :
+Composant Home : 
+```bash
+Ligne 4 : import useUserData from '../../utils/useUserData';//A commenter pour utiliser useLocalData
+
+Ligne 5 : //import useLocalData from '../../utils/useLocalData'; //Supprimer commentaire pour utilisateur
+```
+
+```bash
+Ligne 23 : const {userData,userActivity, userSession,userPerformance,loading,error,} = useUserData(id, useApi);// changer useUserData en useLocalData.
+
+```

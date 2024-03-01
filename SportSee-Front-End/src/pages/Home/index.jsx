@@ -1,72 +1,71 @@
+// Home.js
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CharActivity from '../../components/ChartActivity';
+import useUserData from '../../utils/useUserData';//A commenter pour utiliser useLocalData
+//import useLocalData from '../../utils/useLocalData'; //Supprimer commentaire pour utilisateur
+import Loading from '../../components/Loading';
+import Hello from '../../components/Hello';
+import ChartActivity from '../../components/ChartActivity';
 import ChartPerf from '../../components/ChartPerf';
 import ChartScore from '../../components/ChartScore';
 import ChartSessions from '../../components/ChartSessions';
-import KeyData from '../../components/KeyData';
-import iconeCalorie from '../../assets/calorie-icon.png';
-import iconeGlucide from '../../assets/glucide-icon.png';
-import iconeProteine from '../../assets/protein-icon.png';
-import iconeLipide from '../../assets/lipide-icon.png';
-
-import { useDataApi, useDataMock } from '../../utils/useDataFetching';
-import { Checkbox } from '../../components/CheckBock';
-
-export default function Home() {
+import KeyDataAside from '../../components/KeyDataAside';
+import Checkbox from '../../components/CheckBock';
+import Error from '../Error';
+const Home = () => {
   const { id } = useParams();
-  const [userData, setUserData] = useState({});
-  const [userActivity, setUserActivity] = useState({});
-  const [userPerformance, setUserPerformance] = useState({});
-  const [userSession, setUserSession] = useState({});
-  const [useApi, setUseApi] = useState(true); // État pour déterminer l'utilisation de l'API ou des fausses données
+  const [useApi, setUseApi] = useState(true);
 
-  // Choisissez le hook approprié en fonction de la valeur de useApi
-  const dataHook = useApi ? useDataMock : useDataApi;
+  const handleCheckboxChange = () => {
+    setUseApi((prevUseApi) => !prevUseApi);
+  };
 
-  // Appelez le hook sélectionné
-  dataHook(id, setUserData, setUserActivity, setUserSession, setUserPerformance);
+  const {
+    userData,
+    userActivity,
+    userSession,
+    userPerformance,
+    loading,
+    error,
+  } = useUserData(id, useApi);// changer useUserData en useLocalData.
+
+  
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error errorMessage={`Erreur lors de la récupération des données : ${error.message}`} />;
+  }
+
+
 
   const { userInfos, keyData } = userData;
- 
 
- 
   return (
     <>
       <main className="main-containte">
-        <div className="header-page">
-          <h1>
-            <span>Bonjour </span>
-            <span className="nameUser">{userInfos?.firstName}</span>
-            <Checkbox
-              label="Utiliser API"
-              checked={useApi}
-              onChange={() => {
-                setUseApi(!useApi);
-              
-              }}
-            />
-          </h1>
-          <p>Félicitation ! Vous avez explosé vos objectifs hier 👏 </p>
-        </div>
-        <div className="container-chart">
-          <section className="section-content">
-            <CharActivity data={userActivity?.sessions || []} />
+        <section className="header-page">
+          <Hello firstName={userInfos?.firstName} />
+          <Checkbox label="Utiliser l'API" checked={useApi} onChange={handleCheckboxChange} />
+        </section>
+        <section className="container-chart">
+          <article className="section-content">
+            <ChartActivity data={userActivity?.sessions || []} />
             <div className="chart">
               <ChartSessions data={userSession?.sessions || []} />
-              <ChartPerf dataPerf={userPerformance || []} />
-    
+              <ChartPerf data={userPerformance?.data || []} />
               <ChartScore data={userData} />
             </div>
-          </section>
+          </article>
+
           <aside className="section-aside">
-            <KeyData srcIcone={iconeCalorie} quatityName="Calories" quantitycount={keyData?.calorieCount} />
-            <KeyData srcIcone={iconeProteine} quatityName="Proteines" quantitycount={keyData?.proteinCount} />
-            <KeyData srcIcone={iconeGlucide} quatityName="Glucides" quantitycount={keyData?.carbohydrateCount} />
-            <KeyData srcIcone={iconeLipide} quatityName="Lipides" quantitycount={keyData?.lipidCount} />
+            <KeyDataAside keyData={keyData} />
           </aside>
-        </div>
+        </section>
       </main>
     </>
   );
-}
+};
+
+export default Home;

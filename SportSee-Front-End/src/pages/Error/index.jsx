@@ -1,13 +1,17 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-function Error() {
+function Error({ errorMessage }) {
   return (
-   <div  className='error'>
-    <h1 className='error__title'>404</h1>
-    <p className='error__descript'>Oups! La page que vous demandez n'existe pas.</p>
-<Link to="/">Retourner sur la page d’accueil</Link>
-   </div>
-  )
+    <div className='error'>
+      <h1 className='error__title'>Erreur</h1>
+      <p className='error__descript'>{errorMessage || "Une erreur s'est produite."}</p>
+      <Link to="/">Retourner sur la page d’accueil</Link>
+    </div>
+  );
 }
 
-export default Error
+Error.propTypes = {
+  errorMessage: PropTypes.string, // Définissez le type de la propriété errorMessage
+};
 
+export default Error;

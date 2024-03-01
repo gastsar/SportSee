@@ -1,24 +1,10 @@
 import PropTypes from "prop-types";
 import { RadialBarChart, RadialBar, Legend, PolarAngleAxis } from "recharts";
+import { CalculateChartData, CustomLegend } from "../Utils";
 
 function ChartScore({ data }) {
-  const { todayScore, score } = data;
-  const displayScore = todayScore !== undefined ? todayScore : score;
+  const { chartData, displayScore } = CalculateChartData(data);
 
-  const chartData = [{ score: displayScore }];
-  if (todayScore !== undefined) {
-    chartData[0].todayScore = todayScore;
-  }
-
-  const customLegend = () => (
-    <div className="custom-legend">
-       <p className="radialChart-text">
-        <span>{displayScore * 100}%</span>
-        <br />
-        de votre  <br/>objectif
-      </p>
-    </div>
-  );
   return (
     <article className="radialChart idem">
       <h4 className="radialChart-title">Score</h4>
@@ -37,7 +23,7 @@ function ChartScore({ data }) {
       >
         <PolarAngleAxis
           type="number"
-          domain={[0, 1]} // Le domaine doit être entre 0 et 1 pour les pourcentages
+          domain={[0, 100]} // Le domaine doit être entre 0 et 1 pour les pourcentages
           angleAxisId={0}
           tick={false}
         />
@@ -46,14 +32,15 @@ function ChartScore({ data }) {
           fill="#E60000"
           background
           clockWise
-          dataKey={todayScore !== undefined ? "todayScore" : "score"}
+          dataKey={chartData[0].todayScore !== undefined ? "todayScore" : "score"}
+      
         />
         <Legend
           iconSize={10}
           layout="vertical"
           verticalAlign="middle"
           wrapperStyle={{ text: { fill: "#000" } }}
-          content={customLegend}
+          content={() => CustomLegend(displayScore)}
         />
       </RadialBarChart>
     </article>

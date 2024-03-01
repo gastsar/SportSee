@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import mockdata from '../../data/mockdata.json';
 function UserComponent({ id, firstName, lastName }) {
-
   let initialFirstName = firstName.charAt(0);
   let initialLastName = lastName.charAt(0);
 

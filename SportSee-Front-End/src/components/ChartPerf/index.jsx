@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { MapKindToLabel } from '../Utils';
 import {
   Radar,
   RadarChart,
@@ -8,21 +9,8 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-export default function ChartPerf({ dataPerf }) {
-  const { data, kind } = dataPerf;
-
-  const kindLabels = {
-    "1": "cardio",
-    "2": "énergie",
-    "3": "endurance",
-    "4": "force",
-    "5": "vitesse",
-    "6": "intensité"
-  }; 
-
-  //const mapKindToLabel = (kindValue) => kind[kindValue];
-  const mapKindToLabel = (kindValue) => kindLabels[kindValue];
-
+export default function ChartPerf({ data }) {
+  
   return (
     <article className="radarchart-Wrapper idem">
       <ResponsiveContainer width="100%" height="100%">
@@ -35,7 +23,7 @@ export default function ChartPerf({ dataPerf }) {
           <PolarAngleAxis
             dataKey="kind"
             tick={{ fill: '#ffffff', fontSize: 11 }}
-            tickFormatter={mapKindToLabel} // Utilisez la fonction de mappage ici
+            tickFormatter={MapKindToLabel} // Utilisez la fonction de mappage ici
           />
           <PolarRadiusAxis axisLine={false} tick={false} />
           <Radar
@@ -50,15 +38,12 @@ export default function ChartPerf({ dataPerf }) {
   );
 }
 
-
 ChartPerf.propTypes = {
-  dataPerf: PropTypes.shape({
-    data: PropTypes.arrayOf(
-      PropTypes.shape({
-        kind: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-        value: PropTypes.number.isRequired,
-      })
-    ),
-    kind: PropTypes.objectOf(PropTypes.string.isRequired),
-  }).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      
+      value: PropTypes.number.isRequired // Assurez-vous que value est un nombre
+    })
+  ).isRequired
 };
+

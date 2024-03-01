@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { ChartActivityTooltip } from '../Utils';
 import {
   BarChart,
   Bar,
@@ -10,22 +11,7 @@ import {
 } from 'recharts';
 
 
-
-const CustomTooltip = ({ active, payload}) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="custom-tooltip-activity">
-        <p className="label"> {payload[0].value}kg</p>
-        <p className="label"> {payload[1].value}Kcal</p>
-      </div>
-    );
-  }
-
-  return null;
-};
-
-
-function CharActivity({ data }) {
+function ChartActivity({ data }) {
   return (
     <article>
       <h2 className="barchart-title">Activité quotidienne</h2>
@@ -64,7 +50,7 @@ function CharActivity({ data }) {
           tick={{ fill: '#9B9EAC', fontWeight: 500, fontSize: 14 }}
          
         />
-         <Tooltip content={<CustomTooltip />} />
+         <Tooltip content={<ChartActivityTooltip />} />
         <Legend
           verticalAlign="top"
           align="right"
@@ -93,8 +79,8 @@ function CharActivity({ data }) {
   );
 }
 
-// Ajouter propTypes pour le composant CharActivity
-CharActivity.propTypes = {
+//  propTypes composant CharActivity
+ChartActivity.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       day: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -104,10 +90,4 @@ CharActivity.propTypes = {
   ).isRequired,
 };
 
-
-CustomTooltip.propTypes = {
-  active: PropTypes.bool,
-  payload: PropTypes.array,
-}
-
-export default CharActivity;
+export default ChartActivity;

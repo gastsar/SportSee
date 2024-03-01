@@ -72,6 +72,8 @@ font-size: small;
 }
 .chart{
     display: flex;
+    margin-top: 30px;
+    justify-content: space-between;
     
 }
 .section-content{
@@ -82,6 +84,7 @@ font-size: small;
     width: 20%;
     display: flex;
 flex-direction: column;
+justify-content: space-between;
 gap: 30px;
 }
 

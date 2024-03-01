@@ -1,3 +1,4 @@
+
 import PropTypes from 'prop-types';
 import {
   LineChart,
@@ -5,39 +6,17 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 
-  ResponsiveContainer
-} from "recharts";
+import {CustomTooltipLinear, FormatDayOfWeek , CustomizedCursor } from '../Utils';
 
-
-function CustomTooltipLinear({ active, payload }) {
-  if (active && payload && payload.length) {
-    return (
-      <div className="custom-tooltip tooltip-linearChart">
-        <p className="label label-linearChart">{`${payload[0].value} min`}</p>
-      </div>
-    )
-  }
-
-  return null
-}
-
-// Fonction de formatage des jours
-const formatDayOfWeek = (dayNumber) => {
-  const daysOfWeek = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-  return daysOfWeek[dayNumber - 1];
-};
 export default function ChartSessions({ data }) {
   return (
     <article className="linearChart-Wrapper idem">
       <h2 className="linearChart-title">Durée moyenne des sessions</h2>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          data={data}
-
-          className="linear-graph"
-        >
-
+        <LineChart data={data} className="linear-graph">
           <XAxis
             dataKey="day"
             tickLine={false}
@@ -47,46 +26,36 @@ export default function ChartSessions({ data }) {
               fontWeight: 500,
               fontSize: 12,
             }}
-            tickFormatter={formatDayOfWeek}
+            tickFormatter={FormatDayOfWeek}
+            opacity={0.5}
           />
-
-          <YAxis
-            hide={true}
-            dataKey="sessionLength"
-            domain={['dataMin - 20', 'dataMax + 20']}
-          />
-          <Tooltip
-            content={<CustomTooltipLinear />}
-            cursor={{ stroke: 'red', strokeWidth: 2 }}
-          />
+          <YAxis hide={true} domain={['dataMin - 20', 'dataMax + 20']} />
+          <Tooltip content={<CustomTooltipLinear />} cursor={<CustomizedCursor />} />
           <Line
             type="natural"
             dataKey="sessionLength"
-            stroke="#FFFFFF"
-            dot={false}
-            activeDot={{ r: 5 }}
+            stroke="white"
             strokeWidth={2}
+            dot={false}
+            activeDot={{
+              stroke: '#00000075',
+              strokeOpacity: 0.7,
+              strokeWidth: 6,
+              r: 8,
+            }}
+            opacity={0.5}
           />
-        
         </LineChart>
       </ResponsiveContainer>
     </article>
-
   );
 }
 
-
-
 ChartSessions.propTypes = {
   data: PropTypes.arrayOf(
-      PropTypes.shape({
-          formatDay: PropTypes.string,
-          duration: PropTypes.number,
-      })
+    PropTypes.shape({
+      day: PropTypes.number.isRequired,
+      sessionLength: PropTypes.number.isRequired,
+    })
   ).isRequired,
-}
-
-CustomTooltipLinear.propTypes = {
-  active: PropTypes.bool,
-  payload: PropTypes.array,
-}
+};

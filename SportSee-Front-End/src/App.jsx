@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 import NavHorizontal from './components/NavHorizontal';
 import NavVertical from './components/NavVertical';
@@ -7,7 +7,7 @@ import Error from './pages/Error';
 import UserSelect from './components/User';
 
 function App() {
- 
+
   return (
     <>
       <Router>
@@ -15,16 +15,6 @@ function App() {
         <NavVertical />
         <UserSelect />
         <Routes>
-          {/* Définissez la page d'accueil par défaut avec index */}
-          <Route
-            path="/"
-            element={<Outlet />}
-          >
-            <Route
-              index
-              element={<Home userData="defaultUserData" />}
-            />
-          </Route>
           <Route
             path="/user/:id/dashboard"
             element={<Home />}
