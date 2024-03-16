@@ -11,7 +11,7 @@ function Error({ errorMessage }) {
 }
 
 Error.propTypes = {
-  errorMessage: PropTypes.string, // Définissez le type de la propriété errorMessage
+  errorMessage: PropTypes.string, 
 };
 
 export default Error;

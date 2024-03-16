@@ -119,3 +119,26 @@ margin-bottom: 20px ;
 .header-page h1{
     padding: 10px 0;
 }
+
+@media screen and (max-width: 1260px) {
+    .section-content {
+        width: 100%;
+    }
+    .container-chart {
+      
+        flex-direction: column-reverse;
+    }
+    .section-aside {
+ 
+       width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 30px;
+    }
+    .card__keyData {
+      
+        padding: 2px 16px;
+       
+    }
+  }
+  

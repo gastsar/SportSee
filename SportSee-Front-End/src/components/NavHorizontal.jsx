@@ -8,7 +8,7 @@ export default function NavHorizontal() {
             </div>
             <ul>
             <Link to={`/`} className="cards">Acceuil</Link>
-             
+         
                 <li>Profil</li>
                 <li>Réglage</li>
                 <li>Communauté</li>

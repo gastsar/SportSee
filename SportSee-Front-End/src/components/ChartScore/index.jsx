@@ -2,6 +2,11 @@ import PropTypes from "prop-types";
 import { RadialBarChart, RadialBar, Legend, PolarAngleAxis } from "recharts";
 import { CalculateChartData, CustomLegend } from "../Utils";
 
+/**
+ * Composant de visualisation du score sous forme de gauge
+ * @param {Object} data - Données contenant le score et éventuellement le score de la journée (si il y a eu un score)
+ * @returns {ReactElement} Composant de visualisation du score
+ */
 function ChartScore({ data }) {
   const { chartData, displayScore } = CalculateChartData(data);
 
@@ -34,7 +39,7 @@ function ChartScore({ data }) {
           clockWise
           dataKey={chartData[0].todayScore !== undefined ? "todayScore" : "score"}
       
-        />
+        /> 
         <Legend
           iconSize={10}
           layout="vertical"

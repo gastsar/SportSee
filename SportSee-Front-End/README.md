@@ -25,8 +25,12 @@ Install the dependencies command.
 ### Donner simuler
 #### 1- useUserData :
 Utilisation de json server:
+```bash
+  npx json-server db.json
+```
+
 Endpoints:
-- http://localhost:3001/user
+- http://localhost:3001/user.
 - http://localhost:3001/activity
 - http://localhost:3001/average-sessions
 - http://localhost:3001/performance

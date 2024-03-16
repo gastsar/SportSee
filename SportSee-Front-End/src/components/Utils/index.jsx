@@ -1,6 +1,13 @@
 import PropTypes from 'prop-types';
 import { Rectangle } from 'recharts';
 
+
+/**
+ * @param {booléen} active - état actif de l'infobulle
+ * @param {Array} payload - tableau de données pour l'infobulle
+ * 
+ * @returns {JSX.Element|null} - élément JSX pour l'infobulle ou null
+ */
 export const ChartActivityTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
@@ -18,7 +25,10 @@ ChartActivityTooltip.propTypes = {
   payload: PropTypes.array,
 };
 
-
+/**
+ * @param {string} kindValue - valeur de performance
+ * @returns {string} - label de performance correspondant
+ */
 export const MapKindToLabel = (kindValue) => ({
     "1": "cardio",
     "2": "énergie",
@@ -28,8 +38,12 @@ export const MapKindToLabel = (kindValue) => ({
     "6": "intensité"
   })[kindValue];
 
-  
 
+   /**
+   * Calcule les données pour le graphique de score
+   * @param {Object} data - Données contenant le score et éventuellement le score de la journée (si il y a eu un score)
+   * @returns {Object} - Données pour le graphique de score
+   */
   export const CalculateChartData = (data) => {
     const { todayScore, score } = data;
     const displayScore = todayScore !== undefined ? todayScore : score;

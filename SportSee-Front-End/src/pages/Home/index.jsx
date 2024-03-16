@@ -1,8 +1,8 @@
 // Home.js
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useUserData from '../../utils/useUserData';//A commenter pour utiliser useLocalData
-//import useLocalData from '../../utils/useLocalData'; //Supprimer commentaire pour utilisateur
+//import useUserData from '../../utils/useUserData';//A commenter pour utiliser useLocalData
+import useLocalData from '../../utils/useLocalData'; //Supprimer commentaire pour utilisateur
 import Loading from '../../components/Loading';
 import Hello from '../../components/Hello';
 import ChartActivity from '../../components/ChartActivity';
@@ -21,14 +21,7 @@ const Home = () => {
   };
 
   const {
-    userData,
-    userActivity,
-    userSession,
-    userPerformance,
-    loading,
-    error,
-  } = useUserData(id, useApi);// changer useUserData en useLocalData.
-
+    userData,userActivity,userSession,userPerformance,loading,error,} = useLocalData(id, useApi);// changer useUserData en useLocalData.
   
   if (loading) {
     return <Loading />;
@@ -37,8 +30,6 @@ const Home = () => {
   if (error) {
     return <Error errorMessage={`Erreur lors de la récupération des données : ${error.message}`} />;
   }
-
-
 
   const { userInfos, keyData } = userData;
 
