@@ -1,4 +1,4 @@
-// useApiData.js
+
 import { useEffect, useState } from 'react';
 
 

@@ -2,7 +2,7 @@
 import NavHorizontal from './components/Nav/NavHorizontal';
 import NavVertical from './components/Nav/NavVertical';
 import UserSelect from './components/User/index';
-import  Router  from './Router'; // Import the router configuration
+import  Router  from './Router'; 
 
 function App() {
   return (

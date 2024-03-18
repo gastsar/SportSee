@@ -30,7 +30,6 @@ const Home = () => {
   }
 
   if (error) {
-    
     return <Error errorMessage={`Erreur lors de la récupération des données : ${error.message}`} />;
   }
 
@@ -39,7 +38,15 @@ const Home = () => {
       <main className="main-containte">
         <section className="header-page">
           <Hello firstName={userData.name} />
-          <Checkbox label="Utiliser l'API" checked={useApi} onChange={handleCheckboxChange} />
+         
+          <div style={{ display: 'flex', alignItems: 'center',  }}>
+          <Checkbox checked={useApi} onChange={handleCheckboxChange} />
+        
+            <div style={{ marginRight: '10px', backgroundColor: 'lightblue'}}>
+              {useApi ? "Décochez pour utiliser les donées simulées." : "Cochez pour utiliser l'API reelle."}
+            </div>
+           
+          </div>
         </section>
         <section className="container-chart">
           <article className="section-content">

@@ -17,15 +17,15 @@ function ChartScore({ data }) {
         innerRadius={90}
         outerRadius={90}
         barSize={10}
-        data={[data]} // Remplacez data par [data]
+        data={[data]} 
         startAngle={180}
         endAngle={180 - 360}
-        fill="#E60000" // Couleur des barres
-        background={{ fill: "#eee" }} // Couleur du fond
+        fill="#E60000" 
+        background={{ fill: "#eee" }} 
       >
         <PolarAngleAxis
           type="number"
-          domain={[0, 100]} // Le domaine doit être entre 0 et 1 pour les pourcentages
+          domain={[0, 100]}
           angleAxisId={0}
           tick={false}
         />
@@ -34,14 +34,14 @@ function ChartScore({ data }) {
           fill="#E60000"
           background
           clockWise
-          dataKey="score" // Mettez ici la clé appropriée pour le score
+          dataKey="score" 
         /> 
         <Legend
           iconSize={10}
           layout="vertical"
           verticalAlign="middle"
           wrapperStyle={{ text: { fill: "#000" } }}
-          content={() => <CustomLegend score={data.score} />} // Passer score comme prop
+          content={() => <CustomLegend score={data.score} />} 
         />
       </RadialBarChart>
     </article>

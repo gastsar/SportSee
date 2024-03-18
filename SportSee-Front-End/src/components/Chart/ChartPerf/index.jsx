@@ -22,7 +22,7 @@ export default function ChartPerf({ data }) {
           <PolarAngleAxis
             dataKey="kind"
             tick={{ fill: '#ffffff', fontSize: 11 }}
-            tickFormatter={data.kind} // Utilisez la fonction de mappage ici
+         
           />
           <PolarRadiusAxis axisLine={false} tick={false} />
           <Radar

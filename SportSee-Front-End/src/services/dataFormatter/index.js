@@ -35,9 +35,6 @@ export class UserSessions extends UserData {
 export class UserPerformance extends UserData {
     constructor(data) {
         super(data);
-        /**
-         * @type {Object.<number, string>}
-         */
         this._kind = {
             1: 'Cardio',
             2: 'Energie',
@@ -48,10 +45,7 @@ export class UserPerformance extends UserData {
         };
     }
 
-    /**
-     * Retourne les données formatées de l'utilisateur
-     * @return {Object[]} Les données formatées
-     */
+
     getData() {
         const customData = this._data.data.map(entry => ({
             ...entry,
@@ -111,13 +105,13 @@ export class UserMainData extends UserData {
 }
 
 /**
- * Classe représentant les données des activités d'un utilisateur
+ * Classe représentant les données des activités
  */
 export class UserActivity extends UserData {
     getData() {
         const customData = this._data.sessions.map((entry, idx) => ({
             ...entry,
-            day: (idx + 1), // Ajouter 1 à l'index
+            day: (idx + 1),
             calories: entry.calories,
         }));
         return customData;

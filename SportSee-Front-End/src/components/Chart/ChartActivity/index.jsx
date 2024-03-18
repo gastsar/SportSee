@@ -25,7 +25,7 @@ function ChartActivity({ data }) {
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={data}
-          barGap={8}
+          barGap={10}
           barSize={7}
           margin={{
             top: 5,
@@ -40,11 +40,11 @@ function ChartActivity({ data }) {
             stroke={'#DEDEDE'}
           />
           <text
-            x={100} // Modifier la position x selon vos besoins
-            y={20} // Modifier la position y selon vos besoins
+            x={100} 
+            y={20}
             textAnchor="middle"
             fill="#000"
-            fontSize={16} // Modifier la taille de la police selon vos besoins
+            fontSize={16} 
             fontWeight="bold"
           >
             Activité quotidienne
