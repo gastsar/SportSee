@@ -78,6 +78,7 @@ font-size: small;
 }
 .section-content{
     width: 80%;
+    background: #FBFBFB;
 }
 
 .section-aside{
@@ -95,21 +96,14 @@ gap: 30px;
 
 
 .profil__header {
-    margin:40px 0 0 70px;
-
-    & span {
+   & h1{
+    font-size:xxx-large;
+  & span {
         color: #FF0101;
 
     }
-
-    & h2 {
-        margin: 30px 0;
-        font-size: 48px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 24px;
-        /* 50% */
     }
+  
 }
 
 

@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import {CustomTooltipLinear, FormatDayOfWeek , CustomizedCursor } from '../Utils';
+import {CustomTooltipLinear, CustomizedCursor } from '../Utils';
 
 export default function ChartSessions({ data }) {
   return (
@@ -26,7 +26,7 @@ export default function ChartSessions({ data }) {
               fontWeight: 500,
               fontSize: 12,
             }}
-            tickFormatter={FormatDayOfWeek}
+            tickFormatter={data.day}
             opacity={0.5}
           />
           <YAxis hide={true} domain={['dataMin - 20', 'dataMax + 20']} />
@@ -54,7 +54,7 @@ export default function ChartSessions({ data }) {
 ChartSessions.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      day: PropTypes.number.isRequired,
+      day: PropTypes.string.isRequired,
       sessionLength: PropTypes.number.isRequired,
     })
   ).isRequired,

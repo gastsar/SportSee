@@ -1,15 +1,12 @@
 import PropTypes from "prop-types";
 import { RadialBarChart, RadialBar, Legend, PolarAngleAxis } from "recharts";
-import { CalculateChartData, CustomLegend } from "../Utils";
 
 /**
  * Composant de visualisation du score sous forme de gauge
- * @param {Object} data - Données contenant le score et éventuellement le score de la journée (si il y a eu un score)
+ * @param {Object} data - Données contenant le score et éventuellement le score de la journée (s'il y a eu un score)
  * @returns {ReactElement} Composant de visualisation du score
  */
 function ChartScore({ data }) {
-  const { chartData, displayScore } = CalculateChartData(data);
-
   return (
     <article className="radialChart idem">
       <h4 className="radialChart-title">Score</h4>
@@ -20,7 +17,7 @@ function ChartScore({ data }) {
         innerRadius={90}
         outerRadius={90}
         barSize={10}
-        data={chartData}
+        data={[data]} // Remplacez data par [data]
         startAngle={180}
         endAngle={180 - 360}
         fill="#E60000" // Couleur des barres
@@ -37,15 +34,14 @@ function ChartScore({ data }) {
           fill="#E60000"
           background
           clockWise
-          dataKey={chartData[0].todayScore !== undefined ? "todayScore" : "score"}
-      
+          dataKey="score" // Mettez ici la clé appropriée pour le score
         /> 
         <Legend
           iconSize={10}
           layout="vertical"
           verticalAlign="middle"
           wrapperStyle={{ text: { fill: "#000" } }}
-          content={() => CustomLegend(displayScore)}
+          content={() => <CustomLegend score={data.score} />} // Passer score comme prop
         />
       </RadialBarChart>
     </article>
@@ -54,9 +50,29 @@ function ChartScore({ data }) {
 
 ChartScore.propTypes = {
   data: PropTypes.shape({
-    todayScore: PropTypes.number,
-    score: PropTypes.number,
-  }),
+    score: PropTypes.number.isRequired, // Ajoutez une validation pour le score
+  }).isRequired,
+};
+
+/**
+ * Composant de légende personnalisée
+ * @param {Object} props - Propriétés du composant
+ * @returns {ReactElement} Composant de légende personnalisée
+ */
+function CustomLegend({ score }) {
+  return (
+    <div className="custom-legend">
+      <p className="radialChart-text">
+        <span>{score}%</span>
+        <br />
+        de votre <br />objectif
+      </p>
+    </div>
+  );
+}
+
+CustomLegend.propTypes = {
+  score: PropTypes.number.isRequired,
 };
 
 export default ChartScore;

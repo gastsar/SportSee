@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { MapKindToLabel } from '../Utils';
 import {
   Radar,
   RadarChart,
@@ -23,7 +22,7 @@ export default function ChartPerf({ data }) {
           <PolarAngleAxis
             dataKey="kind"
             tick={{ fill: '#ffffff', fontSize: 11 }}
-            tickFormatter={MapKindToLabel} // Utilisez la fonction de mappage ici
+            tickFormatter={data.kind} // Utilisez la fonction de mappage ici
           />
           <PolarRadiusAxis axisLine={false} tick={false} />
           <Radar

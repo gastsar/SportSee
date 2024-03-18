@@ -1,19 +1,20 @@
-// Home.js
-import { useState } from 'react';
+import  { useState } from 'react';
 import { useParams } from 'react-router-dom';
-//import useUserData from '../../utils/useUserData';//A commenter pour utiliser useLocalData
-import useLocalData from '../../utils/useLocalData'; //Supprimer commentaire pour utilisateur
+import useLocalData from '../../services/useLocalData';
 import Loading from '../../components/Loading';
 import Hello from '../../components/Hello';
-import ChartActivity from '../../components/ChartActivity';
-import ChartPerf from '../../components/ChartPerf';
-import ChartScore from '../../components/ChartScore';
-import ChartSessions from '../../components/ChartSessions';
-import KeyDataAside from '../../components/KeyDataAside';
-import Checkbox from '../../components/CheckBock';
+import ChartActivity from '../../components/Chart/ChartActivity';
+import ChartPerf from '../../components/Chart/ChartPerf';
+import ChartScore from '../../components/Chart/ChartScore';
+import ChartSessions from '../../components/Chart/ChartSessions';
+
+import Checkbox from '../../components/Checkbox';
 import Error from '../Error';
+import KeyData from '../../components/KeyData';
+
 const Home = () => {
   const { id } = useParams();
+
   const [useApi, setUseApi] = useState(true);
 
   const handleCheckboxChange = () => {
@@ -21,37 +22,39 @@ const Home = () => {
   };
 
   const {
-    userData,userActivity,userSession,userPerformance,loading,error,} = useLocalData(id, useApi);// changer useUserData en useLocalData.
-  
+    userData, userActivity, userSession, userPerformance, loading, error,
+  } = useLocalData(id, useApi);
+
   if (loading) {
     return <Loading />;
   }
 
   if (error) {
+    
     return <Error errorMessage={`Erreur lors de la récupération des données : ${error.message}`} />;
   }
-
-  const { userInfos, keyData } = userData;
 
   return (
     <>
       <main className="main-containte">
         <section className="header-page">
-          <Hello firstName={userInfos?.firstName} />
+          <Hello firstName={userData.name} />
           <Checkbox label="Utiliser l'API" checked={useApi} onChange={handleCheckboxChange} />
         </section>
         <section className="container-chart">
           <article className="section-content">
-            <ChartActivity data={userActivity?.sessions || []} />
+            <ChartActivity data={userActivity} />
             <div className="chart">
-              <ChartSessions data={userSession?.sessions || []} />
-              <ChartPerf data={userPerformance?.data || []} />
+              <ChartSessions data={userSession} />
+              <ChartPerf data={userPerformance} />
               <ChartScore data={userData} />
             </div>
           </article>
 
           <aside className="section-aside">
-            <KeyDataAside keyData={keyData} />
+            {userData.keyData.map((keyDataItem, index) => (
+              <KeyData key={index} {...keyDataItem} />
+            ))}
           </aside>
         </section>
       </main>

@@ -1,21 +1,21 @@
 import PropTypes from 'prop-types';
 
-export default function KeyData({ srcIcone, quatityName, quantitycount }) {
-    const abbreviation = quatityName === 'Calories' ? 'kCal' : 'g';
-
+export default function KeyData(data) {
+ 
     return (
         <div className='card__keyData'>
-            <img src={srcIcone} alt="" />
+            <img src={data?.icon} alt="" />
             <div  className='card__keyData__info'>
-                <span className='card__keyData__info__count'>{quantitycount}{abbreviation}</span>
-                <span className='card__keyData__info__title'>{quatityName}</span>
+                <span className='card__keyData__info__count'>{data?.value}{data?.unit}</span>
+                <span className='card__keyData__info__title'>{data?.name}</span>
             </div>
         </div>
     )
 }
 
 KeyData.propTypes = {
-    srcIcone: PropTypes.string,
-    quatityName: PropTypes.string,
-    quantitycount: PropTypes.number,
+    icon: PropTypes.string,
+    name: PropTypes.string,
+    unit: PropTypes.string,
+    value: PropTypes.string,
 };

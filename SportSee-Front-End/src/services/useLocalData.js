@@ -1,11 +1,7 @@
-// useUserData.js
 import { useEffect, useState } from 'react';
-import {
-  simulateGetUsers,
-  simulateGetUserActivity,
-  simulateGetUserAverageSessions,
-  simulateGetUserPerformance,
-} from './mockData';
+import {simulateGetUsers, simulateGetUserActivity,simulateGetUserAverageSessions,simulateGetUserPerformance,} from './mockData';
+import { UserSessions, UserPerformance, UserMainData,UserActivity } from './dataFormatter'; 
+
 const useUserData = (id, useApi) => {
   const [userData, setUserData] = useState({});
   const [userActivity, setUserActivity] = useState({});
@@ -29,21 +25,21 @@ const useUserData = (id, useApi) => {
           const sessionData = await sessionResponse.json();
           const performanceData = await performanceResponse.json();
 
-          setUserData(usersData.data);
-          setUserActivity(activityData.data);
-          setUserSession(sessionData.data);
-          setUserPerformance(performanceData.data);
+          setUserData(new UserMainData(usersData.data).getData());
+          setUserActivity(new UserActivity(activityData.data).getData());
+          setUserSession(new UserSessions(sessionData.data).getData());
+          setUserPerformance(new UserPerformance(performanceData.data).getData());
         } else {
           // Utiliser les données simulées
-          const usersData = await simulateGetUsers();
-          const activityData = await simulateGetUserActivity(parseInt(id, 10));
-          const sessionData = await simulateGetUserAverageSessions(parseInt(id, 10));
-          const performanceData = await simulateGetUserPerformance(parseInt(id, 10));
+          const usersData =  simulateGetUsers();
+          const activityData = simulateGetUserActivity(parseInt(id, 10));
+          const sessionData =  simulateGetUserAverageSessions(parseInt(id, 10));
+          const performanceData =  simulateGetUserPerformance(parseInt(id, 10));
 
-          setUserData(usersData.find((user) => user.id === parseInt(id, 10)) ?? {});
-          setUserActivity(activityData);
-          setUserSession(sessionData);
-          setUserPerformance(performanceData);
+          setUserData(new UserMainData(usersData.find((user) => user.id === parseInt(id, 10)) ?? {}).getData());
+          setUserActivity(new UserActivity(activityData).getData());
+          setUserSession(new UserSessions(sessionData).getData());
+          setUserPerformance(new UserPerformance(performanceData).getData());
         }
       } catch (error) {
         setError(error);

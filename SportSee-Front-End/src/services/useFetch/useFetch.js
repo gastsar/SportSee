@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 
-export function useApiData(endpoint, port) {
+export function useFetch(endpoint, port) {
   const [data, setData] = useState({});
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);

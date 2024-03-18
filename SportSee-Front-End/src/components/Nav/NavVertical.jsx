@@ -1,9 +1,9 @@
 
 import PropTypes from 'prop-types';
-import iconeMedite from '../assets/iconeMedite.svg';
-import iconePiscine from '../assets/iconePiscine.svg';
-import iconePoid from '../assets/iconePoid.svg';
-import iconeVelo from '../assets/iconeVelo.svg';
+import iconeMedite from '/icon/iconeMedite.svg';
+import iconePiscine from '/icon/iconePiscine.svg';
+import iconePoid from '/icon/iconePoid.svg';
+import iconeVelo from '/icon/iconeVelo.svg';
 
 const icons = [
   { id: 1, svg: iconeMedite, },

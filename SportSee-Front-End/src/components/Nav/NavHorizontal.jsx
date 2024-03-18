@@ -1,4 +1,4 @@
-import Logo from '../assets/logo.svg';
+import Logo from '/assets/logo.svg';
 import { Link } from 'react-router-dom';
 export default function NavHorizontal() {
     return (
